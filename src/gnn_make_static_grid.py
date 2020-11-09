@@ -49,7 +49,7 @@ def get_road_network(dir, image_size, testing, data_type):
 def process_grid(city, image_size, trn_val_test, raw_dir, save, proc_dir, logger, data_type):
     fname_full = os.path.join(proc_dir, f'{city}_{trn_val_test}_roads_{data_type}.npy')
     raw=os.path.join(raw_dir, city, trn_val_test)
-    grid = get_road_network(raw, image_size, trn_val_test=='testing', data_type)
+    #grid = get_road_network(raw, image_size, trn_val_test=='testing', data_type)
     if os.path.isfile(fname_full):
         logger.info(f'Reading already processed {trn_val_test}_{data_type} file')
         grid = np.load(fname_full)
@@ -102,7 +102,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
     # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
+    project_dir = Path(__file__).resolve().parents[1]
     data_dir = os.path.join(project_dir, 'data')
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables

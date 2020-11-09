@@ -4,6 +4,7 @@ import h5py
 import os
 import logging
 from pathlib import Path
+import torch
 
 def get_edges_and_unconnected_nodes(node_coords):
     e_start=[]
@@ -60,14 +61,18 @@ def main(city, in_dir, out_dir, file_type, tstval=None, vol_filt=0):
         node_file = os.path.join(out_dir, f'{city}_nodes_{vol_filt}.npy')
         edge_file = os.path.join(out_dir, f'{city}_edges_{vol_filt}.npy')
         unc_node_file = os.path.join(out_dir, f'{city}_unc_nodes_{vol_filt}.npy')
+        mask_file = os.path.join(out_dir, f'{city}_Mask_{vol_filt}.pt')
     else:
         node_file = os.path.join(out_dir, f'{city}_nodes_{vol_filt}_{tstval}.npy')
         edge_file = os.path.join(out_dir, f'{city}_edges_{vol_filt}_{tstval}.npy')
-        unc_node_file = os.path.join(out_dir, f'{city}_unc_nodes_{vol_filt}_{tstval}.npy')      
+        unc_node_file = os.path.join(out_dir, f'{city}_unc_nodes_{vol_filt}_{tstval}.npy') 
+        mask_file = os.path.join(out_dir, f'{city}_Mask_{vol_filt}.pt')     
     np.save(node_file, connected_nodes)
     np.save(edge_file, e_idx)
     np.save(unc_node_file, unc_nodes)
-
+    mask = torch.zeros([495,436]).byte()
+    mask[connected_nodes[:,0], connected_nodes[:,1]]=1
+    torch.save(mask, mask_file)
 
 
 if __name__ == '__main__':
@@ -75,11 +80,12 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
     # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
+    project_dir = Path(__file__).resolve().parents[1]
     data_dir = os.path.join(project_dir, 'data')
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
     #load_dotenv(find_dotenv())
 
     #main('Istanbul', os.path.join(data_dir, 'interim'), os.path.join(data_dir, 'processed'), '_roads_max_vol')
-    main('Moscow', os.path.join(data_dir, 'interim'), os.path.join(data_dir, 'processed'), '_roads_max_vol', None, 5)
+    city='Berlin'
+    main(city, os.path.join(data_dir, 'interim'), os.path.join(data_dir, 'processed/'+city), '_roads_max_vol', None, 5)
