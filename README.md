@@ -24,5 +24,7 @@ Run `gnn_make_nodes_edges.py` - this will create the nodes and edges information
 
 ## Other files in src
 `gnn_dataset.py` - the graph dataset
-`models_graph_resnet.py` - the graph network from last year https://github.com/mie-lab/traffic4cast-Graph-ResNet
+
+`models_graph_resnet.py` - the gnn from last year https://github.com/mie-lab/traffic4cast-Graph-ResNet
+
 `models_graph_ensnet.py` - the new gnn
