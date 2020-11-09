@@ -1,5 +1,5 @@
 data/
-!.keep
+!data/.keep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
