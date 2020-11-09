@@ -1,2 +1,2 @@
-# traffic4cast_graph_ens
-Team Road Rage - Graph Network
+# traffic4cast_graph
+Team Road Rage - Graph Neural Network
